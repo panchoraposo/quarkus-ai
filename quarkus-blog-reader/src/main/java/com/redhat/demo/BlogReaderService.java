@@ -1,28 +1,60 @@
 package com.redhat.demo;
 
-import dev.langchain4j.service.SystemMessage;
-import dev.langchain4j.service.UserMessage;
-import io.quarkiverse.langchain4j.RegisterAiService;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@RegisterAiService
-public interface BlogReaderService {
-    
-    @SystemMessage("You are an assistant that receives the body of an HTML page and sum up the article in that page. Add key takeaways to the end of the sum up.")
-    @UserMessage("""
-        The body will be sent as URL
-        """)
-    String prepare();
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
-    @UserMessage("""
-                Here's the URL:
-                ```
-                {url}
-                ```                
-            """)
-    String sendBody(String url);
+import dev.langchain4j.data.message.ChatMessage;
+import dev.langchain4j.data.message.SystemMessage;
+import dev.langchain4j.data.message.UserMessage;
+import io.quarkiverse.langchain4j.ollama.OllamaChatLanguageModel;
+import jakarta.enterprise.context.ApplicationScoped;
 
-    @UserMessage("""
-                That's it. You can sum up the article and add key takeaways to the end of the sum up.
-            """)
-    String sumUp();
+@ApplicationScoped
+public class BlogReaderService {
+
+    private final OllamaChatLanguageModel model;
+
+    public BlogReaderService(OllamaChatLanguageModel model) {
+        this.model = model;
+    }
+
+    public String summarize(String url) throws IOException {
+        // Obtener contenido de la URL
+        Document doc = Jsoup.connect(url).get();
+        String text = doc.select("p, h1, h2, h3, h4").stream()
+                .map(Element::text)
+                .collect(Collectors.joining("\n"));
+
+        // Dividir texto en fragmentos de máximo 512 caracteres
+        List<String> segments = splitText(text, 512);
+
+        // Generar un resumen por cada segmento
+        StringBuilder summary = new StringBuilder();
+        for (String segment : segments) {
+            List<ChatMessage> messages = List.of(
+                new SystemMessage("Eres un asistente que resume artículos."),
+                new UserMessage("Resume el siguiente texto:\n" + segment)
+            );
+
+            summary.append(model.generate(messages)).append("\n\n");
+        }
+
+        return summary.toString();
+    }
+
+    private List<String> splitText(String text, int chunkSize) {
+        List<String> chunks = new ArrayList<>();
+        int length = text.length();
+        for (int i = 0; i < length; i += chunkSize) {
+            chunks.add(text.substring(i, Math.min(length, i + chunkSize)));
+        }
+        return chunks;
+    }
+
 }
