@@ -8,7 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class RequestSplitter {
     
-    private static final int MAX_CHARACTERS = 2000;
+    private static final int MAX_CHARACTERS = 1000;
 
     List<String> split(String text) {
         List<String> pieces = new ArrayList<>();

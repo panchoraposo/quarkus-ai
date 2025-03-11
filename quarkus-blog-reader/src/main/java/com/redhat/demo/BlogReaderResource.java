@@ -34,7 +34,7 @@ public class BlogReaderResource {
     @Produces(MediaType.TEXT_PLAIN)
     public String read(String url) {
         // Read the HTML from the specified URL
-        String content = webCrawler.crawl(url);
+        //String content = webCrawler.crawl(url);
 
         LOGGER.info("\uD83D\uDD1C Preparing analysis of {}", url);
 
@@ -42,13 +42,13 @@ public class BlogReaderResource {
         blogReaderService.prepare();
 
         // Split the HTML into small pieces
-        List<String> split = requestSplitter.split(content);
+        //List<String> split = requestSplitter.split(content);
 
         // Send each piece of HTML to the LLM
-        for (int i = 0; i < split.size(); i++) {
-            blogReaderService.sendBody(split.get(i));
-            LOGGER.info("\uD83E\uDDD0 Analyzing article... Part {} out of {}.", (i + 1), split.size());
-        }
+        //for (int i = 0; i < split.size(); i++) {
+        //    blogReaderService.sendBody(split.get(i));
+        //    LOGGER.info("\uD83E\uDDD0 Analyzing article... Part {} out of {}.", (i + 1), split.size());
+        //}
 
         LOGGER.info("\uD83D\uDCDD Preparing response...");
 
