@@ -1,6 +1,6 @@
 schemaVersion: 2.3.0
 metadata:
-  generateName: cde-ollama-continue
+  generateName: chatbot
 attributes:
   controller.devfile.io/storage-type: ephemeral
 projects:
@@ -48,7 +48,7 @@ commands:
   - id: copyconfig
     exec:
       component: udi
-      commandLine: "mkdir /home/user/.continue && cp /projects/cde-ollama-continue/continue-config.json /home/user/.continue/config.json"
+      commandLine: "mkdir /home/user/.continue && cp /projects/chatbot/continue-config.json /home/user/.continue/config.json"
 events:
   postStart:
     - pullmodel
