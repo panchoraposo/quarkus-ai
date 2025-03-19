@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: ollama-data
 spec:
-  storageClassName: azurefile-csi
+  storageClassName: <<STORAGE_CLASS_NAME>>
   accessModes:
     - ReadWriteOnce
   resources:
@@ -15,7 +15,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: webui-data
 spec:
-  storageClassName: azurefile-csi
+  storageClassName: <<STORAGE_CLASS_NAME>>
   accessModes:
     - ReadWriteOnce
   resources:
