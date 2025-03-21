@@ -1,10 +1,10 @@
 schemaVersion: 2.3.0
 metadata:
-  generateName: chatbot
+  generateName: quarkus-ai
 attributes:
   controller.devfile.io/storage-type: ephemeral
 projects:
-  - name: chatbot
+  - name: quarkus-ai
     git:
       remotes:
         origin: 'https://github.com/panchoraposo/quarkus-ai'
@@ -40,15 +40,11 @@ commands:
   - id: pullmodel
     exec:
       component: ollama
-      commandLine: "ollama pull llama3:8b"
-  - id: pullautocompletemodel
+      commandLine: "ollama pull llama3.2:1b"
+  - id: start-mistral
     exec:
       component: ollama
-      commandLine: "ollama pull starcoder2:3b"
-  #- id: copyconfig
-  #  exec:
-  #    component: udi
-  #    commandLine: "mkdir /home/user/.continue && cp /projects/langchain4j-chatbot/continue-config.json /home/user/.continue/config.json"
+      commandLine: "ollama start llama3.2"
 events:
   postStart:
     - pullmodel
