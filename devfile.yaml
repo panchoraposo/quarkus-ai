@@ -45,7 +45,7 @@ commands:
     exec:
       component: ollama
       commandLine: "ollama start llama3.2"
-events:
-  postStart:
-    - pullmodel
-    - start-llama
+#events:
+#  postStart:
+#    - pullmodel
+#    - start-llama
