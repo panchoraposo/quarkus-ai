@@ -41,12 +41,11 @@ commands:
     exec:
       component: ollama
       commandLine: "ollama pull llama3.2:1b"
-  - id: start-mistral
+  - id: start-llama
     exec:
       component: ollama
       commandLine: "ollama start llama3.2"
 events:
   postStart:
     - pullmodel
-    - pullautocompletemodel
-    - copyconfig
+    - start-llama
