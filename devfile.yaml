@@ -37,15 +37,15 @@ components:
     mountSources: true
     sourceMapping: /.ollama
 commands:
-  - id: pullmodel
+  - id: 1-pull-model
     exec:
       component: ollama
       commandLine: "ollama pull llama3.2:1b"
-  - id: start-llama
+  - id: 2-run-model
     exec:
       component: ollama
       commandLine: "ollama run llama3.2:1b"
-#events:
-#  postStart:
-#    - pullmodel
-#    - start-llama
+  - id: 3-run-chatbot
+    exec:
+      component: udi
+      commandLine: "mvn quarkus:dev"
