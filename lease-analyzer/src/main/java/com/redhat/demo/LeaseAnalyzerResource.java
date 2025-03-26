@@ -37,7 +37,7 @@ public class LeaseAnalyzerResource {
     @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUpload.class)))
     @APIResponse(responseCode = "200", description = "Successfully analyzed lease document", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = LeaseReport.class)))
     public LeaseReport upload(@RestForm("file") FileUpload fileUploadRequest) {
-        
+
         final String fileName = fileUploadRequest.fileName();
         LOG.infof("Uploading file: %s", fileName);
 

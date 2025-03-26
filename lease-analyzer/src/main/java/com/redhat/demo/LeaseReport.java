@@ -11,8 +11,10 @@ import java.time.LocalDate;
  * @param developmentTermEndDate The end date of any development/construction period
  * @param landlordName The name of the landlord/property owner
  * @param tenantName The name of the tenant/lessee
- * @param taxParcelId The tax parcel identification number of the leased property
- * @param acres The size of the leased property in acres
+ * @param address The address of the leased property
+ * @param rent The month's rent 
+ * @param petsFee The month's fee if pets are allowed
+ * @param petsAllowed Pets are allowed
  * @param exclusiveRights Whether the tenant has exclusive rights to the property
  */
 public record LeaseReport(
@@ -22,7 +24,9 @@ public record LeaseReport(
         LocalDate developmentTermEndDate,
         String landlordName,
         String tenantName,
-        String taxParcelId,
-        BigDecimal acres,
+        String address,
+        BigDecimal rent,
+        Boolean petsAllowed,
+        BigDecimal petsFee,
         Boolean exclusiveRights) {
 }
