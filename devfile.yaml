@@ -48,4 +48,5 @@ commands:
   - id: 3-run-chatbot
     exec:
       component: udi
+      workingDir: ${PROJECT_SOURCE}/langchain4j-chatbot
       commandLine: "mvn quarkus:dev"
